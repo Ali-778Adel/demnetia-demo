@@ -10,7 +10,7 @@ class HandleToastMeaasge {
     return  showToast(
         message,
       context: context,
-      duration:const Duration(seconds: 10),
+      duration:const Duration(seconds:3),
       backgroundColor: chosseColor(state: enumState),
 
 

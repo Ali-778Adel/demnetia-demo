@@ -5,11 +5,8 @@ Future<dynamic>navigationWithBackRoute({Widget? widget,BuildContext? buildContex
 
 }
 //
-//Future<dynamic>navigationWithoutBackRoute({Widget? widget,BuildContext? buildContext}){
-//
-//  return Navigator.pushAndRemoveUntil(buildContext!,
-//    MaterialPageRoute(builder: (buildContext)=>widget!)
-//    ,!false
-//  );
-//
-//}
+Future<dynamic>navigationWithoutBackRoute({Widget? widget,BuildContext? buildContext}){
+  return Navigator.pushAndRemoveUntil<void>(buildContext!,
+    MaterialPageRoute(builder: (buildContext)=>widget!),(Route<dynamic> route) => false, );
+
+}

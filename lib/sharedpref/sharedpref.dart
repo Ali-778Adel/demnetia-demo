@@ -32,7 +32,7 @@ class SharedPref_Helper{
 
 
 
-  static Future<dynamic> getDataFromSharepref({required String key})async{
+  static  getDataFromSharepref({required String key})async{
      if (sharedPreferences!.get(key)==null){
        return sharedPreferences!.get(key)==false;
      }else{
@@ -42,7 +42,7 @@ class SharedPref_Helper{
   }
   static getDataFromShareprefrences({required String key}){
 
-      return sharedPreferences!.get(key);
+      return  sharedPreferences!.get(key);
 
 
   }

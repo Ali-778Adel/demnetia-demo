@@ -1,61 +1,47 @@
-import 'package:dementiademo/cubit/user_form_cubit.dart';
-import 'package:dementiademo/cubit_states/user_form_states.dart';
-import '../widgets/form/cutom_radio_listtile.dart';
+import 'package:dementiademo/cubit/home_page_cubit.dart';
+import 'package:dementiademo/cubit_states/home_page_states.dart';
+import 'package:dementiademo/widgets/custom_appbar.dart';
+import 'package:dementiademo/widgets/custom_bottom_nav_bar.dart';
+import 'package:dementiademo/widgets/custom_drawer.dart';
+import 'package:dementiademo/widgets/custom_tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+ class TestHomePage extends StatelessWidget {
+   @override
+   Widget build(BuildContext context) {
+     TabController ?tabController;
+     return DefaultTabController(
+         length: context.read<HomePageCubit>().relatedTabBarWidgets.length,
+         initialIndex: 0,
+         child:Scaffold(
+           appBar: PreferredSize(
+             preferredSize:const Size(double.infinity,160),
+             child: CustomAppBar(title: 'Dementia',
+             bottom: BlocBuilder<HomePageCubit,HomePageStates>(
+               builder: (context, state) {
+                 return CustomTabBar(
+                   tabController: tabController,
+                   function: (index)=>context.read<HomePageCubit>().onTabBarItemTapped(index: index,context: context,tabController: tabController),
+                 );
+               }
+             ),
+             ),
 
-class Test extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Flexible(
-          fit: FlexFit.loose,
-//          flex: 1,
-          child: SizedBox(
-            height: 60,
-            width: double.infinity,
-            child: Row(
-              children: [
-              const Text(
-                  '* Do you have a wife ?',
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                ),
-                BlocBuilder<UserFormCubit, UserFormStates>(
-                  builder: (context, state) {
-                    return ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        controller: ScrollController(keepScrollOffset: false),
-                        itemCount: 2,
-                        itemBuilder: (context, index) {
-                          return SizedBox(
-                            height: 60,
-                            width: 140,
-                            child: CustomRadioListTile(
-                              value: (index + 1),
-                              groupValue: context.read<UserFormCubit>().value,
-                              index: index,
-                              titles: context.read<UserFormCubit>().titles,
-                              function: (int? val) {
-                                context
-                                    .read<UserFormCubit>()
-                                    .onRadioTapped(radioValue: val);
-                              },
-                            ),
-                          );
-                        });
-                  },
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
+           ),
+           drawer: CustomDrawer(),
+           body: BlocBuilder<HomePageCubit,HomePageStates>(
+             builder: (context,state){
+               return TabBarView(children: context.read<HomePageCubit>().relatedTabBarWidgets);
+             },
+           ),
+           bottomNavigationBar: BlocBuilder<HomePageCubit,HomePageStates>(
+             builder: (context,state){
+               return CustomBottomNavBar(currentIndex: context.read<HomePageCubit>().currentIndex,
+               function: (index)=>context.read<HomePageCubit>().onBottomNavBarItemChanged(index: index),
+               );
+             },
+           ),
+
+         ));
+   }
+ }

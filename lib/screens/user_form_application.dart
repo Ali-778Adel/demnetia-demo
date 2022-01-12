@@ -46,7 +46,7 @@ class UserFormApplication extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: TextFormField(
                           controller:
-                              context.read<UserFormCubit>().ageContoller,
+                              context.read<UserFormCubit>().ageController,
                           decoration: const InputDecoration(
 //                      fillColor: Colors.limeAccent,
                             constraints:
@@ -58,7 +58,7 @@ class UserFormApplication extends StatelessWidget {
                           validator: (String? message) {
                             if (context
                                 .read<UserFormCubit>()
-                                .ageContoller
+                                .ageController
                                 .text
                                 .isEmpty) {
                               return message = "age musn't be empty";
@@ -70,6 +70,7 @@ class UserFormApplication extends StatelessWidget {
                         height: 30,
                       ),
                       CustomRadioRow(
+                        rowNumber: 1,
                         questionText: 'Do you have a wife? ',
                         blocBuilderWidget:
                             BlocBuilder<UserFormCubit, UserFormStates>(
